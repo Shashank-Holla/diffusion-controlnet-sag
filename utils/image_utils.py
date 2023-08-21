@@ -13,7 +13,7 @@ def canny_edge_detection(imagename, low_threshold=100, high_threshold=200):
     return canny_image
 
 
-def openpose_detection(imagename, openpose_model=openpose):
+def openpose_detection(imagename, openpose_model):
     image = Image.open(imagename)
     image = np.array(image)
     image = openpose_model(image)

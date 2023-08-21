@@ -49,13 +49,12 @@ class StableDiffusionWithSAGAndControlNet:
 
     
     def cpu_offload_model(self):
-        device = device
         hook = None
         for cpu_offloaded_model in [self.text_encoder, self.unet, self.vae]:
-            _, hook = accelerate.cpu_offload_with_hook(cpu_offloaded_model, device, prev_module_hook=hook)
+            _, hook = accelerate.cpu_offload_with_hook(cpu_offloaded_model, self.torch_device, prev_module_hook=hook)
 
         # control net hook has be manually offloaded as it alternates with unet
-        accelerate.cpu_offload_with_hook(self.controlnet, device)
+        accelerate.cpu_offload_with_hook(self.controlnet, self.torch_device)
 
         # final offload vae 
         final_offload_hook = hook
