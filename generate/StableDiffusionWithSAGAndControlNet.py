@@ -1,6 +1,7 @@
 import torch
 import numpy as np
 from PIL import Image
+import os
 
 # offload cpu
 import accelerate
@@ -55,7 +56,7 @@ class CrossAttnStoreProcessor:
 
 
 class StableDiffusionWithSAGAndControlNet:
-    def __init__(self, torch_device, controlnet=None):
+    def __init__(self, torch_device, controlnet=None, style_flag=True):
         # Autoencoder- latents into image space
         self.vae = AutoencoderKL.from_pretrained("runwayml/stable-diffusion-v1-5", 
                                             revision="fp16", 
@@ -89,7 +90,8 @@ class StableDiffusionWithSAGAndControlNet:
         self.torch_device = torch_device
 
         # load style weights for textual inversion
-        self.load_textual_inversion_style_model()
+        if style_flag:
+            self.load_textual_inversion_style_model(os.path.join("style_model", "learned_embeds.bin"))
 
 
 
