@@ -22,7 +22,7 @@ def generate():
     parser.add_argument('--controlNet_image', type=str, default="", help='Path to controlNet image to guide generation')
     parser.add_argument('--controlNet_type', type=str, choices=['canny', 'openpose', ''], help='ControlNet model type to guide')
     parser.add_argument('--style_flag', type=str, choices=['F', 'T'], default="T", help='Flag to use style')
-    parser.add_argument('--sag_scale', type=float, default=7.5, help='SAG scal')
+    parser.add_argument('--sag_scale', type=float, default=0.75, help='SAG scale')
     parser.add_argument('--controlnet_cond_scale', type=float, default=1.0, help='Controlnet conditioning scale')
     opt = parser.parse_args()
 
@@ -51,6 +51,9 @@ def generate():
         openpose = OpenposeDetector.from_pretrained("lllyasviel/ControlNet")
         control_img = openpose_detection(controlNet_image, openpose)
         controlnet = ControlNetModel.from_pretrained("fusing/stable-diffusion-v1-5-controlnet-openpose", torch_dtype=torch.float16)
+    else:
+        control_img = None
+        controlnet = None
     
     if style_flag == "T":
         prompt += " in <pop-art> style"
