@@ -20,7 +20,7 @@ def generate():
     parser.add_argument('--seed', type=int, default=3, help='Seed to make generation deterministic')
     parser.add_argument('--batch_size', type=int, default=1, help='Size of each batch to run')
     parser.add_argument('--controlNet_image', type=str, default="", help='Path to controlNet image to guide generation')
-    parser.add_argument('--controlNet_type', type=str, choices=['canny', 'openpose'], help='ControlNet model type to guide')
+    parser.add_argument('--controlNet_type', type=str, choices=['canny', 'openpose', ''], help='ControlNet model type to guide')
     parser.add_argument('--style_flag', type=str, choices=['F', 'T'], default="T", help='Flag to use style')
     parser.add_argument('--sag_scale', type=float, default=7.5, help='SAG scal')
     parser.add_argument('--controlnet_cond_scale', type=float, default=1.0, help='Controlnet conditioning scale')
