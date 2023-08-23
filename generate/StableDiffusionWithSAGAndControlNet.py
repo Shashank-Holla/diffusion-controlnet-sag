@@ -1,11 +1,12 @@
 import torch
+import torch.nn.functional as F
 import numpy as np
 from PIL import Image
 import os
 
 # offload cpu
 import accelerate
-from diffusers import AutoencoderKL, UniPCMultistepScheduler, UNet2DConditionModel
+from diffusers import AutoencoderKL, UniPCMultistepScheduler, UNet2DConditionModel, ControlNetModel
 from transformers import CLIPTextModel, CLIPTokenizer
 from tqdm.auto import tqdm
 
@@ -237,7 +238,7 @@ class StableDiffusionWithSAGAndControlNet:
         # convert to resized, normalized tensor
         if self.controlnet_guidance:
             cond_image = image_utils.prepare_control_image(controlnet_image, device=self.torch_device, dtype=self.controlnet.dtype)         
-            height, width = image.shape[-2:]
+            height, width = cond_image.shape[-2:]
 
         # 3. prepare timesteps
         self.scheduler.set_timesteps(num_inference_steps, device=self.torch_device)
@@ -254,7 +255,14 @@ class StableDiffusionWithSAGAndControlNet:
                                        )
 
         # to decide controlnet
-        controlnet_keep = [1.0]
+        if self.controlnet_guidance:
+            controlnet_keep = []
+            for i in range(len(timesteps)):
+                keeps = [
+                    1.0 - float(i / len(timesteps) < s or (i + 1) / len(timesteps) > e)
+                    for s, e in zip(control_guidance_start, control_guidance_end)
+                ]
+                controlnet_keep.append(keeps[0] if isinstance(self.controlnet, ControlNetModel) else keeps)
 
         # 5. denoising loop
         store_processor = CrossAttnStoreProcessor()

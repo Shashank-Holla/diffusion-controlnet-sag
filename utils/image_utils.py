@@ -73,6 +73,7 @@ def gaussian_blur_2d(img, kernel_size, sigma):
 
     img = F.pad(img, padding, mode="reflect")
     img = F.conv2d(img, kernel2d, groups=img.shape[-3])
+    return img
 
 
 

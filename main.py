@@ -62,16 +62,16 @@ def generate():
     torch_device = "cuda" if torch.cuda.is_available() else "cpu"
 
     # instantiate and generate image
-    stablediffusion_model = StableDiffusionWithSAGAndControlNet(controlnet, style_flag, torch_device)
+    stablediffusion_model = StableDiffusionWithSAGAndControlNet(torch_device, controlnet, style_flag)
 
     output_image = stablediffusion_model.generateDiffusion(prompt, 
                                                            control_img, 
                                                            generator, 
                                                            batch_size, 
-                                                           num_inference_steps=20,
-                                                           controlnet_cond_scale=1.0,
-                                                           guidance_scale=7.5,
-                                                           sag_scale=0.75    
+                                                           num_inference_steps=num_inference_steps,
+                                                           controlnet_conditioning_scale=controlnet_cond_scale,
+                                                           guidance_scale=guidance_scale,
+                                                           sag_scale=sag_scale    
                                                            )
     
 
@@ -80,7 +80,7 @@ def generate():
     result_filename = time.strftime("%Y%m%d-%H%M%S") + ".png"
 
     output_image.save(os.path.join("results", result_filename))
-    print(f"Diffused image saved at {os.path.join('results', result_filename+'.png')}")
+    print(f"Diffused image saved at {os.path.join('results', result_filename)}")
 
 if __name__ == '__main__':
     generate()
