@@ -6,6 +6,7 @@ This is Stable Diffusion built on pre-trained Stable Diffusion v1.5 weights and 
 
 This model is built on Hugging Face modules.
 
+[Deploy and Run](#Deploy and Run)
 ## Deploy and Run
 
 ### Run model
