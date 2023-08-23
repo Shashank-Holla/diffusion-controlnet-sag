@@ -53,16 +53,15 @@ def generate():
         controlnet = ControlNetModel.from_pretrained("fusing/stable-diffusion-v1-5-controlnet-openpose", torch_dtype=torch.float16)
     
     if style_flag == "T":
-        style_flag = True
-    else:
-        style_flag = False
+        prompt += " in <pop-art> style"
+
 
 
     # setup torch device. Need gpu for cpu_offload in sequence.
     torch_device = "cuda" if torch.cuda.is_available() else "cpu"
 
     # instantiate and generate image
-    stablediffusion_model = StableDiffusionWithSAGAndControlNet(torch_device, controlnet, style_flag)
+    stablediffusion_model = StableDiffusionWithSAGAndControlNet(torch_device, controlnet)
 
     output_image = stablediffusion_model.generateDiffusion(prompt, 
                                                            control_img, 

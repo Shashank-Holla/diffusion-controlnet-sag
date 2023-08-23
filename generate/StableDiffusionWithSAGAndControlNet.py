@@ -57,7 +57,7 @@ class CrossAttnStoreProcessor:
 
 
 class StableDiffusionWithSAGAndControlNet:
-    def __init__(self, torch_device, controlnet=None, style_flag=True):
+    def __init__(self, torch_device, controlnet=None):
         # Autoencoder- latents into image space
         self.vae = AutoencoderKL.from_pretrained("runwayml/stable-diffusion-v1-5", 
                                             revision="fp16", 
@@ -91,8 +91,7 @@ class StableDiffusionWithSAGAndControlNet:
         self.torch_device = torch_device
 
         # load style weights for textual inversion
-        if style_flag:
-            self.load_textual_inversion_style_model(os.path.join("style_model", "learned_embeds.bin"))
+        self.load_textual_inversion_style_model(os.path.join("style_model", "learned_embeds.bin"))
 
 
 
@@ -106,18 +105,22 @@ class StableDiffusionWithSAGAndControlNet:
         state_dict = torch.load(style_file_path, map_location="cpu")
         style_token, style_embed = next(iter(state_dict.items()))
         style_embed = style_embed.to(dtype=self.text_encoder.dtype, device=self.text_encoder.device)
-        # put into list
-        style_tokens, style_embeds = [style_token], [style_embed]
+        vocab = self.tokenizer.get_vocab()
+        if style_token not in vocab:
+            # put into list
+            style_tokens, style_embeds = [style_token], [style_embed]
 
-        # update tokenizer
-        self.tokenizer.add_tokens(style_tokens)
-        style_token_ids = self.tokenizer.convert_tokens_to_ids(style_tokens)
-        tokenid_embedding_pairs += zip(style_token_ids, style_embeds)
+            # update tokenizer
+            self.tokenizer.add_tokens(style_tokens)
+            style_token_ids = self.tokenizer.convert_tokens_to_ids(style_tokens)
+            tokenid_embedding_pairs += zip(style_token_ids, style_embeds)
 
-        # update text encoder
-        self.text_encoder.resize_token_embeddings(len(self.tokenizer))
-        for token_id, embed in tokenid_embedding_pairs:
-            self.text_encoder.get_input_embeddings().weight.data[token_id] = embed
+            # update text encoder
+            self.text_encoder.resize_token_embeddings(len(self.tokenizer))
+            for token_id, embed in tokenid_embedding_pairs:
+                self.text_encoder.get_input_embeddings().weight.data[token_id] = embed
+        else:
+            print("Style token already present")
 
 
 
