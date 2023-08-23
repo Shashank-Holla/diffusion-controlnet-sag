@@ -16,5 +16,7 @@ This model is built on Hugging Face modules.
 
 ## Results
 
-|---|---|
-| | |
+| Prompt   | Generated Image |
+|----------|-----------------|
+| Prompt:  |                 |
+| Prompt:  |                 |
