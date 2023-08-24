@@ -94,11 +94,15 @@ These run results are by varying SAG scale and adding artistic style.
 
 ### 4.2. By adding ControlNet- Canny conditioning
 
-Below is the control image used. Edge map is fed as the conditioning image for stable diffusion.
+Below is the control image used. Edge map is fed as the conditioning image for stable diffusion. 
 
 | Control Image                 | Extracted features for spatial context |
 | ----------------------------- | -------------------------------------- |
 | ![img_10](results/MR_p10.png) | ![img_11](results/MR_p11.png)          |
+
+Images with pop-art style shows the style did not exist in the base Stable Diffusion model and is added with the new weights and the newly added word ```<pop-art>```. These images also shows how the model performs when the scale of controlNet conditioning is varied.
+
+The second image has ```controlnet_cond_scale``` of 1.0 and closely follows the edge structure of the conditioning image.  
 
 | Prompt Type                                                                                     | Prompt                                                                                                                                                          | Generated Image             |
 | ----------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
