@@ -24,9 +24,12 @@ ControlNet conditions the diffusion model to learn specific user input condition
 
 ### 2.3. Style
 
-The application is trained on a novel art via Textual Inversion. In our case, images stylistically related to pop-art are trained in order to associate it with `<pop-art>` word within the text encoder embedding. Training images and the weights for style training are available here [<pop-art>](https://huggingface.co/sd-concepts-library/pop-art)
+The application is trained on a novel art via Textual Inversion. In our case, images stylistically related to pop-art are trained in order to associate it with `<pop-art>` word within the text encoder embedding. Training images and the weights for style training are available here [\<pop-art\>](https://huggingface.co/sd-concepts-library/pop-art).
 
 To use the style, add <pop-art> in the prompt. While running the model, enable `style_flag` to use the style.
+
+| ![simg_1](results/popart-3.png) | ![simg_2](results/popart-4.png) | ![simg_3](results/popart-5.png) | ![simg_4](results/popart-7.png)  |
+|-------------|--------|-----------------|---|
 
 ## 3. Deploy and Run
 
