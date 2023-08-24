@@ -28,7 +28,7 @@ The application is trained on a novel art via Textual Inversion. In our case, im
 
 To use the style, add <pop-art> in the prompt. While running the model, enable `style_flag` to use the style.
 
-| ![simg_1](results/popart-3.png) | ![simg_2](results/popart-4.png) | ![simg_3](results/popart-5.png) | ![simg_4](results/popart-7.png)  |
+| ![simg_1](results/popart-3.jpg) | ![simg_2](results/popart-4.jpg) | ![simg_3](results/popart-5.jpg) | ![simg_4](results/popart-7.jpg)  |
 |-------------|--------|-----------------|---|
 
 ## 3. Deploy and Run
@@ -59,7 +59,7 @@ Run model
 
 ### 3.2. Install CLI application and run
 
-This repository is also available as CLI application. Build files are available in `dist` folder in this repository.
+This repository is also available as CLI application. Build files are available in `dist` folder in this repository. Control Image and style weights path must be absolute. Valid Control Image is required if controlnet model is provided.
 
 Clone repository and change directory-
 
