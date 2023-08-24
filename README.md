@@ -85,7 +85,7 @@ SAG_scale: 0.5 MR_p8
 
 
 
-| Prompt   | Generated Image |
-|----------|-----------------|
-| Prompt:  |                 |
-| Prompt:  |                 |
+| Prompt                                                                                                                               | Generated Image             |
+|--------------------------------------------------------------------------------------------------------------------------------------|-----------------------------|
+| ``` Prompt: "Margot Robbie as wonderwoman in  polychrome, good anatomy,  best and quality, extremely detailed"  SAG_scale: 0.25  ``` | ![img_6](results/MR_p6.png) |
+| ``` Prompt: "Margot Robbie as wonderwoman in  polychrome, good anatomy,  best and quality, extremely detailed" SAG_scale: 1.0 ```    | ![img_7](results/MR_p7.png) |
