@@ -1,0 +1,10 @@
+numpy
+diffusers
+transformers
+scipy
+ftfy
+accelerate
+controlnet_aux
+mediapipe
+opencv-contrib-python
+torch

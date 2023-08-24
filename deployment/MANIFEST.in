@@ -1,0 +1,2 @@
+include diffusion/control_images/*.jpg
+include diffusion/style_model/*.bin
