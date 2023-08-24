@@ -16,6 +16,7 @@ from utils import image_utils
 
 
 # processes and stores attention probabilities
+# Below class object is from Hugging Face- StableDiffusionSAG pipeline
 class CrossAttnStoreProcessor:
     def __init__(self):
         self.attention_probs = None
@@ -57,6 +58,10 @@ class CrossAttnStoreProcessor:
 
 
 class StableDiffusionWithSAGAndControlNet:
+    # Code structure of this class is similar to StableDiffusionSAG and StableDiffusionControlNet pipeline 
+    # https://github.com/huggingface/diffusers/blob/v0.20.0/src/diffusers/pipelines/controlnet/pipeline_controlnet.py
+    # https://github.com/huggingface/diffusers/blob/v0.20.0/src/diffusers/pipelines/stable_diffusion/pipeline_stable_diffusion_sag.py
+    
     def __init__(self, torch_device, controlnet=None):
         # Autoencoder- latents into image space
         self.vae = AutoencoderKL.from_pretrained("runwayml/stable-diffusion-v1-5", 
@@ -126,6 +131,7 @@ class StableDiffusionWithSAGAndControlNet:
 
     # SAG related method - 1
     def pred_X0(self, sample, model_output, timestep):
+        # This code segment is from Hugging Face library.
         alpha_prod_t = self.scheduler.alphas_cumprod[timestep]
         beta_prod_t = 1 - alpha_prod_t
         pred_original_sample = (sample - beta_prod_t ** (0.5) * model_output) / alpha_prod_t ** (0.5)
@@ -135,6 +141,7 @@ class StableDiffusionWithSAGAndControlNet:
     # SAG related method - 2
     def sag_masking(self, original_latents, attn_map, map_size, t, eps):
         # Same masking process as in SAG paper: https://arxiv.org/pdf/2210.00939.pdf
+        # This code segment is from Hugging Face library.
         bh, hw1, hw2 = attn_map.shape
         b, latent_channel, latent_h, latent_w = original_latents.shape
         h = self.unet.config.attention_head_dim
@@ -164,6 +171,7 @@ class StableDiffusionWithSAGAndControlNet:
 
     
     def cpu_offload_model(self):
+        # This code segment is from Hugging Face library.
         hook = None
         for cpu_offloaded_model in [self.text_encoder, self.unet, self.vae]:
             _, hook = accelerate.cpu_offload_with_hook(cpu_offloaded_model, self.torch_device, prev_module_hook=hook)

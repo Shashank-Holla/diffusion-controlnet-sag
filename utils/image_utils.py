@@ -22,6 +22,7 @@ def openpose_detection(imagename, openpose_model):
     return image
 
 def resize(image):
+    # This code segment is from Hugging Face library
     height = image.height
     width = image.width
     width, height = (x - x % 8 for x in (width, height))  # resize to integer multiple of vae_scale_factor
@@ -33,6 +34,7 @@ def convert_to_rgb(image):
     return image
 
 def prepare_control_image(image, device, dtype):
+    # This code segment is derived from the VAEImageProcessor preprocess step from Hugging Face library
     # preprocess step
     images = [image]
     # control image needs to be turned RGB
@@ -57,6 +59,7 @@ def prepare_control_image(image, device, dtype):
 
 # SAG method 1: Gaussian blur
 def gaussian_blur_2d(img, kernel_size, sigma):
+    # This code segment is from Hugging face StableDiffusionSAG pipeline document
     ksize_half = (kernel_size - 1) * 0.5
 
     x = torch.linspace(-ksize_half, ksize_half, steps=kernel_size)
