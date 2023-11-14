@@ -93,7 +93,7 @@ These run results are by varying SAG scale and adding artistic style.
 | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | --------------------------- |
 | Generation with SAG; without ControlNet without Style addition SAG scale changes | `Prompt: "Margot Robbie as wonderwoman in  polychrome, good anatomy,  best and quality, extremely detailed"  SAG_scale: 0.25 ` | ![img_6](results/MR_p6.png) |
 | Generation with SAG; without ControlNet without Style addition SAG scale changes | `Prompt: "Margot Robbie as wonderwoman in  polychrome, good anatomy,  best and quality, extremely detailed" SAG_scale: 1.0`    | ![img_7](results/MR_p7.png) |
-| Generation with SAG; without ControlNet with Style Addition                      | `"Margot Robbie as wonderwoman in <pop-art> style" SAG_scale: 0.9`                                                             | ![img_8](results/MR_p8.png) |
+| Generation with SAG; without ControlNet with Style Addition                      | `Prompt: "Margot Robbie as wonderwoman in <pop-art> style" SAG_scale: 0.9`                                                             | ![img_8](results/MR_p8.png) |
 
 ### 4.2. By adding ControlNet- Canny conditioning
 
